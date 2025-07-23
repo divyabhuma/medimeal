@@ -21,6 +21,7 @@ export default function GeminiRecommend() {
   const [form, setForm] = useState({ age: '', medication: '', disease: '', gender: '', foodType: '', bmi: '', weight: '', height: '' });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [bmiCategory, setBmiCategory] = useState('');
 
   // Load previous input for logged-in user
   useEffect(() => {
@@ -41,6 +42,15 @@ export default function GeminiRecommend() {
     if (weight > 0 && height > 0) {
       const bmi = (weight / (height * height)).toFixed(1);
       setForm(f => ({ ...f, bmi }));
+      // Gender-specific BMI categories (standard WHO for adults)
+      let category = '';
+      if (form.gender === 'Male' || form.gender === 'Female' || form.gender === 'Other') {
+        if (bmi < 18.5) category = 'Underweight';
+        else if (bmi < 25) category = 'Normal weight';
+        else if (bmi < 30) category = 'Overweight';
+        else category = 'Obese';
+      }
+      setBmiCategory(category ? `BMI Category (${form.gender}): ${category}` : '');
     }
   };
 
@@ -91,6 +101,7 @@ export default function GeminiRecommend() {
           <input name="height" type="number" step="0.1" placeholder="Height (cm)" value={form.height} onChange={handleChange} className="bmi-input" />
           <button type="button" onClick={handleCalculateBMI} style={{ background: '#22c55e', color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.1rem', fontWeight: 500, cursor: 'pointer' }}>Calculate BMI</button>
         </div>
+        {bmiCategory && <div style={{ marginBottom: '0.7rem', color: '#166534', fontWeight: 500 }}>{bmiCategory}</div>}
         <input name="medication" placeholder="Medication" value={form.medication} onChange={handleChange} required />
         <input name="disease" placeholder="Disease" value={form.disease} onChange={handleChange} required />
         <button type="submit" disabled={loading}>{loading ? 'Loading...' : 'Get Recommendations'}</button>

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
+const GOOGLE_CLIENT_ID = '772559724147-utfpmphmr81s84n2eao0fnl7likdp79r.apps.googleusercontent.com';
+
 export default function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -104,7 +106,7 @@ export default function Signup() {
           </span>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-          <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             <GoogleLogin
               onSuccess={credentialResponse => {
                 fetch('http://localhost:5000/api/google-login', {
@@ -116,7 +118,7 @@ export default function Signup() {
                   .then(data => {
                     if (data.email) {
                       localStorage.setItem('medimeal_user', JSON.stringify({ name: data.name, email: data.email }));
-                      navigate('/');
+                      navigate('/recommend');
                     } else {
                       alert('Google sign up failed.');
                     }

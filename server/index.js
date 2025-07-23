@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const { Configuration, OpenAIApi } = require('openai');
 const axios = require('axios');
+const { OAuth2Client } = require('google-auth-library');
+const GOOGLE_CLIENT_ID = '772559724147-utfpmphmr81s84n2eao0fnl7likdp79r.apps.googleusercontent.com';
 
 const User = require('./models/User');
 const UserInput = require('./models/UserInput');
@@ -203,6 +205,28 @@ app.get('/api/user-input', async (req, res) => {
     res.json({ input: found ? found.input : null });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching input' });
+  }
+});
+
+// Google Login Route
+app.post('/api/google-login', async (req, res) => {
+  const { token } = req.body;
+  if (!token) return res.status(400).json({ message: 'No token provided' });
+  const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+  try {
+    const ticket = await client.verifyIdToken({ idToken: token, audience: GOOGLE_CLIENT_ID });
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+    if (!email) return res.status(400).json({ message: 'No email in Google account' });
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = new User({ name, email, password: '' });
+      await user.save();
+    }
+    res.json({ email, name });
+  } catch (err) {
+    console.error('Google login error:', err);
+    res.status(401).json({ message: 'Invalid Google token' });
   }
 });
 

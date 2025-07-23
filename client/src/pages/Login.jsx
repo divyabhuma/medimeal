@@ -27,7 +27,7 @@ export default function Login() {
         // Store user info in localStorage (prefer name if available)
         const userName = res.data.name || email;
         localStorage.setItem('medimeal_user', JSON.stringify({ name: userName, email }));
-        setTimeout(() => navigate('/'), 1000); // 1 second delay for feedback
+        setTimeout(() => navigate('/recommend'), 1000); // 1 second delay for feedback
       }
     } catch (err) {
       setMsg(err.response?.data?.message || 'Login failed');
