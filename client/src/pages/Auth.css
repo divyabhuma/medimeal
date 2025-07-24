@@ -1,7 +1,11 @@
 .auth-bg {
   min-height: 100vh;
   min-width: 100vw;
-  background: linear-gradient(135deg, #bbf7d0 0%, #22c55e 100%);
+  /* Add two overlay gradients above the food background image for extra depth */
+  background: 
+    linear-gradient(120deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.09) 100%),
+    linear-gradient(120deg, rgba(26,35,126,0.82) 0%, rgba(100,181,246,0.68) 100%),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,35 +13,40 @@
 .auth-card {
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(34,197,94,0.13);
-  border: 2.5px solid #22c55e;
-  padding: 2.5rem 2.2rem 2rem 2.2rem;
-  min-width: 320px;
-  max-width: 400px;
+  box-shadow: 0 4px 24px rgba(26,35,126,0.13);
+  border: 2.5px solid #1a237e;
+  padding: 3.5rem 3rem 2.5rem 3rem;
+  min-width: 400px;
+  max-width: 520px;
   width: 100%;
+  min-height: 600px;
+  max-height: 700px;
   animation: fade-in 1.2s, slide-up 1.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .auth-card {
     min-width: 0;
     max-width: 100vw;
+    min-height: 0;
+    max-height: none;
     padding: 1.2rem 0.5rem 1rem 0.5rem;
   }
 }
 .auth-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #22c55e;
+  color: #1a237e;
   text-align: center;
   margin-bottom: 1.5rem;
   letter-spacing: 1px;
   animation: fade-in 1.2s;
 }
 .auth-label {
-  color: #166534;
+  color: #1a237e;
   font-weight: 500;
   margin-bottom: 0.3rem;
   display: block;
@@ -46,21 +55,21 @@
   width: 100%;
   padding: 0.7rem;
   border-radius: 8px;
-  border: 1.5px solid #bbf7d0;
+  border: 1.5px solid #64b5f6;
   font-size: 1rem;
-  background: #f8fafc;
+  background: #e3f2fd;
   margin-bottom: 1rem;
-  color: #166534;
+  color: #1a237e;
   transition: border 0.2s;
   animation: fade-in 1.2s;
 }
 .auth-input:focus {
-  border: 2px solid #22c55e;
+  border: 2px solid #1a237e;
   outline: none;
 }
 .auth-btn {
   width: 100%;
-  background: #22c55e;
+  background: #1a237e;
   color: #fff;
   border: none;
   border-radius: 25px;
@@ -70,17 +79,18 @@
   margin-top: 0.5rem;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 2px 8px rgba(34,197,94,0.10);
+  box-shadow: 0 2px 8px rgba(26,35,126,0.10);
   animation: fade-in 1.2s, slide-up 1.2s;
 }
 .auth-btn:hover {
-  background: #16a34a;
+  background: #64b5f6;
+  color: #1a237e;
   transform: translateY(-2px) scale(1.04);
 }
 .auth-alert {
   margin-top: 1rem;
-  background: #fef3c7;
-  color: #b45309;
+  background: #e3f2fd;
+  color: #1a237e;
   border-radius: 8px;
   padding: 0.7rem 1rem;
   text-align: center;

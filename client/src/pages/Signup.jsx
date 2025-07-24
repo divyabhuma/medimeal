@@ -84,8 +84,8 @@ export default function Signup() {
               onChange={e => setAgree(e.target.checked)}
               style={{ marginRight: '0.5rem' }}
             />
-            <label htmlFor="terms" style={{ color: '#166534', fontSize: '0.97rem' }}>
-              I agree to the <a href="/terms.txt" target="_blank" rel="noopener noreferrer" style={{ color: '#22c55e', textDecoration: 'underline' }}>Terms and Conditions</a>
+            <label htmlFor="terms" style={{ color: '#1a237e', fontSize: '0.97rem' }}>
+              I agree to the <a href="/terms.txt" target="_blank" rel="noopener noreferrer" style={{ color: '#1a237e', textDecoration: 'underline' }}>Terms and Conditions</a>
             </label>
           </div>
           {showTermsError && (
@@ -99,7 +99,7 @@ export default function Signup() {
         <div style={{ textAlign: 'center', marginTop: '1.2rem', fontSize: '1rem' }}>
           Already have an account?{' '}
           <span
-            style={{ color: '#22c55e', textDecoration: 'underline', cursor: 'pointer', fontWeight: 500 }}
+            style={{ color: '#1a237e', textDecoration: 'underline', cursor: 'pointer', fontWeight: 500 }}
             onClick={() => navigate('/login')}
           >
             Login

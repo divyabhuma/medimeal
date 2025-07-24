@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 // import logo from '../assets/medimeal-logo.png';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -33,6 +34,8 @@ export default function Login() {
       setMsg(err.response?.data?.message || 'Login failed');
     }
   };
+
+  const GOOGLE_CLIENT_ID = '772559724147-utfpmphmr81s84n2eao0fnl7likdp79r.apps.googleusercontent.com';
 
   return (
     <div className="auth-bg">
@@ -67,11 +70,39 @@ export default function Login() {
           <div style={{ textAlign: 'center', marginTop: '1.2rem', fontSize: '1rem' }}>
             Don't have an account?{' '}
             <span
-              style={{ color: '#22c55e', textDecoration: 'underline', cursor: 'pointer', fontWeight: 500 }}
+              style={{ color: '#1a237e', textDecoration: 'underline', cursor: 'pointer', fontWeight: 500 }}
               onClick={() => navigate('/signup')}
             >
               Sign Up
             </span>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+            <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+              <GoogleLogin
+                onSuccess={credentialResponse => {
+                  fetch('http://localhost:5000/api/google-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: credentialResponse.credential })
+                  })
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.email) {
+                        localStorage.setItem('medimeal_user', JSON.stringify({ name: data.name, email: data.email }));
+                        navigate('/recommend');
+                      } else {
+                        alert('Google login failed.');
+                      }
+                    });
+                }}
+                onError={() => {
+                  alert('Google Sign In Failed');
+                }}
+                width="100%"
+                size="large"
+                text="signin_with"
+              />
+            </GoogleOAuthProvider>
           </div>
         </div>
       </div>
